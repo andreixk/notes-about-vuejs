@@ -78,7 +78,7 @@ If you **NEVER** parse templates (conaining VueJS code) from Flask, and never pl
 
 In order to get them working together you need to either (1) change the Jinja delimeters, or (2) change VueJS delimeters.
 
-**1:**
+**-1-**
 ```python
 #normally you'd do this: app = Flask(...)
 #here's how to override the default delimeters
@@ -104,7 +104,49 @@ app = CustomFlask(__name__)
 [Read](http://jinja.pocoo.org/docs/dev/templates/) more about jinja templates
 
 
-**2:** as described [here](http://vuejs.org/api/#delimiters)
+**-2-** as described [here](http://vuejs.org/api/#delimiters)
 ```javascript
 Vue.config.delimiters = ['(*', '*)']
+```
+
+### Nuance 5 - global event listeners (e.g. from window.addEventListener)
+
+When creating a global event listener (such as 'hashchange' or 'keyup') make sure you remove them if the component is removed, otherwise you'll end up with functions that are trying to access undefined properties.
+
+e.g.:
+```javascript
+{
+	//...
+	methods:{
+		checkHash:function (e) {
+			console.log(e.newURL);
+			this.someProperty=e.newURL;
+		}
+	}
+	,ready:function () {
+		window.addEventListener('hashchange',this.checkHash);
+	}
+}
+```
+This will work great when the component is active and well. However, even when it's destroyed, `checkHash` will still get called (since it's now in window's event listeners), and you'll see the new hash in the console log! **BUT**, `this` inside `checkHash` will be _undefined_ (since the component was destroyed). And you'll get some odd behaviour.
+
+So do this:
+
+```javascript
+{
+	//...inside a component (or mixin) definition
+	methods:{
+		checkHash:function (e) {
+			console.log(e.newURL);
+			this.someProperty=e.newURL;
+		}
+	}
+	,ready:function () {
+		window.addEventListener('hashchange',this.checkHash);
+	}
+	//NB: this will ensure your listener is gone from the DOM tree.
+	,beforeDestroy:function () {
+		window.removeEventListener('hashchange',this.checkHash);
+	}
+}
 ```
