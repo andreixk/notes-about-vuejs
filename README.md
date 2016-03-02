@@ -1,12 +1,12 @@
-### Notes About VueJS
+## Notes About VueJS
 Some notes and nuances I discovered while using VueJS
 
 I recently discovered a new front end framework: [VueJS](http://vuejs.org/). So far it meets my expectations and then some! But as any tool it has some nuances of which you must be mindful. Here are a few (for version **1.0.16**).
 
-#### Nuance 1 - mixins
+### Nuance 1 - mixins
 A [mixin](http://vuejs.org/guide/mixins.html) is **not** a child of an element - it **is** the element. As such, doing things like `$dispatch` and `$broadcast` from within a mixin will not trigger events on the element itself. To trigger an event on the element you must use `$event`.
 
-#### Nuance 2 - filters, bitwise operators
+### Nuance 2 - filters, bitwise operators
 [Filters](http://vuejs.org/api/#Filters) are awesome, but if you need to do bitwise operations, you're out of luck: either use fancy tricks or create a function.
 example:
 
