@@ -7,7 +7,7 @@ I recently discovered a new front end framework: [VueJS](http://vuejs.org/). So 
 A [mixin](http://vuejs.org/guide/mixins.html) is **not** a child of an element - it **is** the element. As such, doing things like `$dispatch` and `$broadcast` from within a mixin will not trigger events on the element itself. To trigger an event on the element you must use `$emit`.
 
 ### Nuance 2 - filters, bitwise operators
-[Filters](http://vuejs.org/api/#Filters) are awesome, but if you need to do bitwise operations, you're out of luck: either use fancy tricks or create a function.
+[Filters](http://vuejs.org/api/#Filters) are awesome, but if you need to do a bitwise OR operation, you're out of luck: either use fancy tricks or create a function.
 example:
 
 ```javascript
