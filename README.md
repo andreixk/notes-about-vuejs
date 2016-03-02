@@ -17,7 +17,9 @@ example:
 ```
 To set bit #2 for example, you could:
 ```javascript
-flag = (flag & ~4) ^4 //equivalent to resetting bit 2 to zero first, then setting it to 1 through XOR
+flag = (flag & ~4) ^4
+//this is equivalent to resetting bit 2 to zero first
+// then setting it to 1 through XOR
 ```
 -OR-
 ```html
