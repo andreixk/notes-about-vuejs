@@ -128,7 +128,7 @@ e.g.:
 	}
 }
 ```
-This will work great when the component is active and well. However, even when it's destroyed, `checkHash` will still get called (since it's now in window's event listeners), and you'll see the new hash in the console log! **BUT**, `this` inside `checkHash` will be _undefined_ (since the component was destroyed). And you'll get some odd behaviour.
+This will work great when the component is active and well. However, even when it's destroyed, `checkHash` will still get called (since it's now in window's event listeners), and you'll see the new hash in the console log! **BUT**, `this.someProperty` inside `checkHash` will be _undefined_ (since the component was destroyed). And you'll get some odd behaviour.
 
 So do this:
 
