@@ -150,3 +150,24 @@ So do this:
 	}
 }
 ```
+
+### Nuance 6 - property/data naming
+
+I don't believe the [documentation](http://vuejs.org/guide) mentions this explicitly, but component data fields cannot start with an underscore.
+
+The following code won't work properly. You'll get a warning that you're trying to use a non-existing model `_someField`:
+
+```javascript
+//...
+data:function () {
+	return {
+		_someField:''
+	}
+}
+//...
+```
+```html
+<input type="text" v-model="_someField"></input>
+```
+
+Same goes for computed properties. Apprently Vue reserves underscored names for internal purposes.
