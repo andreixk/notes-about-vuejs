@@ -171,3 +171,19 @@ data:function () {
 ```
 
 Same goes for computed properties. Apprently Vue reserves underscored names for internal purposes.
+
+
+### _A Finding_
+
+Turns out VueJS has an undocumented `Vue.util.extend` function very similar to jQuery's to create a deep copy of an object:
+
+```javascript
+var myObj = {id:25};
+var func = function(someObject){
+	tmpObj = someObject;
+	tmpObj.id=15; //this will reset myObj.id to 15
+	tmpObj = Vue.util.extend({},someObject);
+	tmpObj.id=15; //myObj.id will stay intact
+}
+func(myObj);
+```
