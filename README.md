@@ -42,7 +42,7 @@ Bonus tip: if you just want to toggle a bitwise flag:
 <a @click.prevent="flag^=4">toggler</a>
 ```
 
-### Nuance 3 - checkboxes
+### <a name="nuance3"></a>Nuance 3 - checkboxes
 
 If you wish to run a method when clicking a checkbox, note this:
 _to get the **OLD** value of the checkbox (i.e. before click) you can use `@click` method:_
@@ -224,7 +224,7 @@ computed:{
 
 _NB: you can also use custom filters: `v-for="item in items | filterBy searchText in 'name' | customAfterFilter "` and do something like Vue.$set() inside it, but that's a hackier way IMHO_
 
-### Nuance 8 (addition to [Nuance 3](### Nuance 3 - checkboxes))
+### Nuance 8 (addition to [Nuance 3](#nuance3))
 
 A way to get the BEFORE and AFTER value of a checkbox (or radio button) is to watch that property (which is much shorter in code anyway).
 
