@@ -187,3 +187,53 @@ var func = function(someObject){
 }
 func(myObj);
 ```
+
+### Nuance 7 - Counting/accessing filtered results
+
+_NB: tested in Vue 1.0.20_
+
+When using filterBy in a v-for loop, occasionally you may want to display some message if there's nothing found or do something else with filtered results. The easiest way I found (as Evan [described](https://github.com/vuejs/Discussion/issues/387#issuecomment-139350747)) is to use a computed property:
+
+```javascript
+// in your component:
+data:{
+		items:[{id:1,name:'abc'},{id:2,name:'abd'},{id:3,name:'cde'}],
+		searchText:''
+},
+computed:{
+	filteredResults:function() {
+		var filter = Vue.filter('filterBy');
+		return filter(this.items,this.searchText,'name');
+	}
+}
+// now you can do things like this.filteredResults.length in your methods
+// or iterate through filteredResults as a regular array
+```
+
+```html
+<!-- in your html: -->
+<input type="text" v-model="searchText">
+<div v-for="item in filteredResults">
+	{{item.name}}
+</div>
+<div v-if="!filteredResults.length">
+	Nothing found, sorry!
+</div>
+```
+[jsfiddle](https://jsfiddle.net/8gukrnbe/)
+
+_NB: you can also use custom filters: `v-for="item in items | filterBy searchText in 'name' | customAfterFilter "` and do something like Vue.$set() inside it, but that's a hackier way IMHO_
+
+### Nuance 8 (addition to [Nuance 3](### Nuance 3 - checkboxes))
+
+A way to get the BEFORE and AFTER value of a checkbox (or radio button) is to watch that property (which is much shorter in code anyway).
+
+```javascript
+watch:{
+  	myCb:function(valueAfter, valueBefore){
+      	this.cbResultClick = valueBefore;
+      	this.cbResultSet = valueAfter;
+  }
+}
+```
+[updated jsfiddle](https://jsfiddle.net/ecq21wjq/1/)
