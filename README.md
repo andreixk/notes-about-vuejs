@@ -237,3 +237,47 @@ watch:{
 }
 ```
 [updated jsfiddle](https://jsfiddle.net/ecq21wjq/1/)
+
+### Nuance 9 - Order of declaration
+
+If you've simply added `<script scr="vue.js">` tag and started hacking away at the code, note that you must create components BEFORE running your `new Vue(...)` code, otherwise you'll get an error about some unknown component.
+```html
+<!--suppose this is your HTML-->
+<div id="app">
+	<mycomp></mycomp>
+</div>
+<template id="mycomp-component">
+	eeee
+</template>
+```
+
+```javascript
+// this code works
+;(function(){
+	Vue.component('mycomp',{
+		template:'#mycomp-component'
+	});
+
+	new Vue({
+		el: '#app',
+		data: {
+			message: 'Hello Vue.js!'
+		}
+	});
+})();
+```
+
+```javascript
+// this code doesn't
+;(function(){
+	new Vue({
+		el: '#app',
+		data: {
+			message: 'Hello Vue.js!'
+		}
+	});
+	Vue.component('mycomp',{
+		template:'#mycomp-component'
+	});
+})();
+```
